@@ -13,7 +13,7 @@ import java.util.List;
 
 public class HomePrincipalPageObject extends BaseClass {
 
-    public static WebDriver driver;
+    public  WebDriver driver;
     static GenerateWord generateWord = new GenerateWord();
 
     private static final String EXCEL_WEB = "excel/DATA_CLIENTE_WAPPE_MOVISTAR.xlsx";
@@ -24,8 +24,8 @@ public class HomePrincipalPageObject extends BaseClass {
 
 
     //Menu principal
-    public static final String MENU_EMPRESAS ="//a[@class='nav-link'][contains(text(),'Empresa')]";
-
+    public  final String MENU_MIS_PRODUCTOS ="//a[contains(text(),'Mis Productos')]";
+    public static String BTN_EMPRESA_MAQUINARIA = "//app-select/main/section[1]/article[1]/figure/div[2]/small";
     public HomePrincipalPageObject() {
         this.driver = Hook.getDriver();
     }
@@ -34,14 +34,15 @@ public class HomePrincipalPageObject extends BaseClass {
         return ExcelReader.data(EXCEL_WEB, EXCEL_SHEET);
     }
 
-    public static void seleccionarMenuEmpresas() throws Throwable {
+    public  void seleccionarMenuMisProductos() throws Throwable {
         try {
-            click(driver, "xpath", MENU_EMPRESAS);
-            ExtentReportUtil.INSTANCE.stepPass(driver, "Se selecciono Opcion menu Empresas");
-            generateWord.sendText("Se selecciono Opcion menu Empresas");
+            click(driver, "xpath", BTN_EMPRESA_MAQUINARIA);
+            click(driver, "xpath", MENU_MIS_PRODUCTOS);
+            ExtentReportUtil.INSTANCE.stepPass(driver, "Se selecciono Opcion menu Mis Productos");
+            generateWord.sendText("Se selecciono Opcion menu Mis Productos");
             generateWord.addImageToWord(driver);
         } catch (Exception e) {
-            ExcelReader.writeCellValue(EXCEL_WEB, EXCEL_SHEET, 1, 6, "FAIL");
+            //ExcelReader.writeCellValue(EXCEL_WEB, EXCEL_SHEET, 1, 6, "FAIL");
             ExtentReportUtil.INSTANCE.stepFail(driver, "Fallo el caso de prueba : " + e.getMessage());
             generateWord.sendText("Tiempo de espera ha excedido");
             generateWord.addImageToWord(driver);
